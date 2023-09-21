@@ -8,29 +8,29 @@ class ClockHand {
         this.shift = 1
     }
 
-    createHand() {
+    create() {
         this.el = document.createElement('div')
         this.el.className = this.elClasses
         document.querySelector(`.clock__dial`).append(this.el)
     }
 
-    moveHand(degree) {
+    move(degree) {
         this.el.style.transform = `rotate(${degree}deg)`
     }
 
     handRate() {
         let i = this.degree + this.shift
         let timeRate = setTimeout(function tick() {
-            this.moveHand(i)
+            this.move(i)
             i += this.shift;
             timeRate = setTimeout(tick.bind(this), this.speed);
         }.bind(this), 0);
     }
 
     start() {
-        this.createHand()
+        this.create()
         this.getCurrentDegree()
-        this.moveHand(this.degree)
+        this.move(this.degree)
         this.handRate()
     }
 }
@@ -85,9 +85,9 @@ class hourHand extends ClockHand {
     }
 }
 
-const seconds   = new secondHand(`clock__hand clock__second-hand`, 1000)
-const minutes   = new minuteHand(`clock__hand clock__minute-hand`, 3000)
-const hours     = new hourHand(`clock__hand clock__hour-hand`, 180000)
+const seconds= new secondHand(`clock__hand clock__second-hand`, 1000)
+const minutes= new minuteHand(`clock__hand clock__minute-hand`, 3000)
+const hours= new hourHand(`clock__hand clock__hour-hand`, 180000)
 
 seconds.start()
 minutes.start()
