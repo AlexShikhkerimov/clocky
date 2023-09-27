@@ -1,93 +1,107 @@
 class ClockHand {
-    constructor() {
-        this.currentDate = new Date()
-        this.el
-        this.degree = 0
-        this.elClasses = ""
-        this.speed = 1000
-        this.shift = 1
+    startTime = new Date()
+    second = 1000
+    baseClassName = 'clock__hand'
+    handClassName = ''
+    handStartValue = 0
+    degreesPerDivision = 6 // number of degrees per dial division
+    speed = this.second // interval for even hand's move
+    shift = this.degreesPerDivision // number of degrees for even hand move
+    startShift = 0
+    delay = 0
+
+    get nodeClassName() {
+        return this.getClassName()
+    }
+
+    /**
+     * Get number of degrees
+     * @return {*}
+     */
+    get deviation() {
+        return this.getDeviation()
     }
 
     create() {
-        this.el = document.createElement('div')
-        this.el.className = this.elClasses
-        document.querySelector(`.clock__dial`).append(this.el)
+        this.node = document.createElement('div')
+        this.node.className = this.nodeClassName
+        document.querySelector(`.clock__dial`).append(this.node)
     }
 
-    move(degree) {
-        this.el.style.transform = `rotate(${degree}deg)`
+    move(degrees) {
+        this.node.style.transform = `rotate(${degrees}deg)`
     }
 
     handRate() {
-        let i = this.degree + this.shift
+        let i = this.deviation + this.shift
         let timeRate = setTimeout(function tick() {
             this.move(i)
             i += this.shift;
             timeRate = setTimeout(tick.bind(this), this.speed);
-        }.bind(this), 0);
+        }.bind(this), this.delay);
+    }
+
+    getClassName() {
+        return `${this.baseClassName} ${this.handClassName}`
+    }
+
+    getDeviation() {
+        // console.log(this.handClassName, this.handStartValue, this.degreesPerDivision)
+        // return this.handStartValue * this.degreesPerDivision
+        return this.handStartValue * this.degreesPerDivision + this.startShift
     }
 
     start() {
         this.create()
-        this.getCurrentDegree()
-        this.move(this.degree)
+        this.move(this.deviation)
         this.handRate()
     }
 }
 
 class secondHand extends ClockHand {
-    constructor(elClasses, speed) {
-        super()
-        this.elClasses = elClasses
-        this.speed = speed
-        this.shift = 6
-    }
-
-    getCurrentDegree() {
-        this.timeValue = this.currentDate.getSeconds()
-        this.degree = this.timeValue * 6
-    }
+    handClassName = 'clock__second-hand'
+    handStartValue = this.startTime.getSeconds()
+    speed = this.second
 }
 
 class minuteHand extends ClockHand {
-    constructor(elClasses, speed) {
-        super()
-        this.elClasses = elClasses
-        this.speed = speed
-        this.shift = 0.3
-    }
+    handClassName = 'clock__minute-hand'
+    handStartValue = this.startTime.getMinutes()
+    secondsPerDivision = 10
+    shift = 1
+    speed = this.secondsPerDivision * this.second
+    startShift = this.calculateShift()
 
-    // ToDo: need shift calculate method
-
-    getCurrentDegree() {
-        const   timeValue = this.currentDate.getMinutes()
-        this.degree = timeValue * 6
+    calculateShift() {
+        const secondsPassed = this.startTime.getSeconds()
+        const res = secondsPassed / this.secondsPerDivision
+        this.delay = (this.secondsPerDivision -(secondsPassed % this.secondsPerDivision)) * this.second
+        return Math.floor(res)
     }
 }
 
 class hourHand extends ClockHand {
-    constructor(elClasses, speed) {
-        super()
-        this.elClasses = elClasses
-        this.speed = speed
-        this.shift = 1.5
-    }
+    handClassName = 'clock__hour-hand'
+    handStartValue = this.startTime.getHours()
+    degreesPerDivision = 30
+    secondsPerDivision = 720
+    shift = 6
+    speed = this.secondsPerDivision * this.second
+    startShift = this.calculateShift()
 
-    getCurrentDegree() {
-        const   timeValue = this.currentDate.getHours(),
-                minutesTimeValue = this.currentDate.getMinutes(),
-                part = Math.floor(minutesTimeValue / 3) * this.shift,
-                remainder = 60 - minutesTimeValue
-        
-        // ToDo: need shift calculate method
-
-        this.degree = timeValue * 30
+    calculateShift() {
+        const currentSecondsValue = this.startTime.getSeconds()
+        const currentMinutesValue = this.startTime.getMinutes()
+        const asd = (currentMinutesValue * 60) + currentSecondsValue
+        const res = asd / this.secondsPerDivision
+        this.delay = (this.secondsPerDivision - (asd % this.secondsPerDivision)) * this.second
+        return Math.floor(res) * this.shift
     }
 }
 
-const seconds= new secondHand(`clock__hand clock__second-hand`, 1000)
-const minutes= new minuteHand(`clock__hand clock__minute-hand`, 3000)
-const hours= new hourHand(`clock__hand clock__hour-hand`, 180000)
+const seconds= new secondHand()
+const minutes= new minuteHand()
+const hours= new hourHand()
 
 seconds.start()
 minutes.start()
