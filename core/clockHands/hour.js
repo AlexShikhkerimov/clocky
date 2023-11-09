@@ -1,7 +1,7 @@
 import { ClockHand } from './hand.js'
 
 export class HourHand extends ClockHand {
-    handClassName = 'clock__hour-hand'
+    handClassName = 'hour-hand'
     handStartValue = this.startTime.getHours()
     degreesPerDivision = 30
     secondsPerDivision = 720

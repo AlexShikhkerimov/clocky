@@ -1,25 +1,18 @@
-import { HourHand } from './clockHands/hour.js'
-import { MinuteHand } from './clockHands/minute.js'
-import { SecondHand } from './clockHands/second.js'
+import { Display } from './display.js'
 
 
 export class Clock {
-    seconds
-    minutes
-    hours
+    clockNode
 
     constructor() {
-        this.seconds = new SecondHand()
-        this.minutes = new MinuteHand()
-        this.hours = new HourHand()
+        this.display = new Display('analog', 'default', 'base')
     }
 
-    start() {
-        this.seconds.run()
-        this.minutes.run()
-        this.hours.run()
-    }
-    stop() {
-        // Drop clock instance
+    async create() {
+        this.clockNode = document.createElement('div')
+        this.clockNode.className = 'clock'
+        this.clockNode.id = 'local'
+        await this.display.create(this.clockNode)
+        document.body.prepend(this.clockNode)
     }
 }

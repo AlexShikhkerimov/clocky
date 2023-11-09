@@ -1,7 +1,7 @@
 export class ClockHand {
     startTime = new Date()
     second = 1000
-    baseClassName = 'clock__hand'
+    baseClassName = 'clock-hand'
     handClassName = ''
     handStartValue = 0
     degreesPerDivision = 6 // number of degrees per dial division
@@ -22,10 +22,10 @@ export class ClockHand {
         return this.getDeviation()
     }
 
-    create() {
+    create(dialNode) {
         this.node = document.createElement('div')
         this.node.className = this.nodeClassName
-        document.querySelector(`.clock__dial`).append(this.node)
+        dialNode.append(this.node)
     }
 
     move(degrees) {
@@ -49,8 +49,8 @@ export class ClockHand {
         return this.handStartValue * this.degreesPerDivision + this.startShift
     }
 
-    run() {
-        this.create()
+    run(parentNode) {
+        this.create(parentNode)
         this.move(this.deviation)
         this.handRate()
     }

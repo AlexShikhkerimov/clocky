@@ -1,7 +1,7 @@
 import { ClockHand } from './hand.js'
 
 export class MinuteHand extends ClockHand {
-    handClassName = 'clock__minute-hand'
+    handClassName = 'minute-hand'
     handStartValue = this.startTime.getMinutes()
     secondsPerDivision = 10
     shift = 1

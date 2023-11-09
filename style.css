@@ -12,23 +12,29 @@ body {
 }
 
 .clock {
-    align-items: center;
     border: 4px solid #091921;
     border-radius: 50%;
     box-shadow: 0 -15px 15px rgba(255, 255, 255, 0.05),
                 inset 0 -15px 15px rgba(255, 255, 255, 0.05),
                 0 15px 15px rgba(0, 0, 0, 0.3),
                 inset 0 15px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
+
     height: 300px;   
-    position: relative;
     width: 300px;
 }
 
+.display {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
 
-/* Dial  drowing start */
-.clock__dial {
+
+/* Dial  drawing start */
+.dial {
     background-color: #dddddd;
     border-radius: 50%;
     height: 6px;
@@ -36,7 +42,7 @@ body {
     width: 6px;
 }
 
-.clock__dial-item {
+.dial-item {
     display: flex;
     height: 6px;
     justify-content: space-between;
@@ -45,8 +51,8 @@ body {
     width: 250px;
 }
 
-.clock__dial-line::before,
-.clock__dial-line::after {
+.dial-line::before,
+.dial-line::after {
     background-color: rgba(255, 255, 255, 0.05);
     content: "";
     display: block;
@@ -54,60 +60,61 @@ body {
     width: 20px;
 }
 
-.clock__dial-line::before {
+.dial-line::before {
     left: 0;
 }
 
-.clock__dial-line::after {
+.dial-line::after {
     right: 0;
 }
 
-.clock__dial-item:nth-child(2) {
+.dial-item:nth-child(2) {
     transform: rotate(30deg);
 }
 
-.clock__dial-item:nth-child(3) {
+.dial-item:nth-child(3) {
     transform: rotate(60deg);
 }
 
-.clock__dial-item:nth-child(4) {
+.dial-item:nth-child(4) {
     transform: rotate(90deg);
 }
 
-.clock__dial-item:nth-child(5) {
+.dial-item:nth-child(4)::before {
+    content: "12";
+    transform: rotate(-90deg) translateY(-15px);;
+}
+.dial-item:nth-child(4)::after {
+    content: "6";
+    transform: rotate(-90deg) translateY(-15px);;
+}
+
+.dial-item:nth-child(5) {
     transform: rotate(120deg);
 }
 
-.clock__dial-item:nth-child(6) {
+.dial-item:nth-child(6) {
     transform: rotate(150deg);
 }
 
-.clock__dial-numb::before,
-.clock__dial-numb::after {
+.dial-numb::before,
+.dial-numb::after {
     color: rgba(255, 255, 255, 0.5);
     display: block;
     font-size: 30px;
 }
 
-.clock__dial-numb.numb1::before {
+.dial-numb.numb1::before {
     content: "9";
     transform: translateY(-15px);
 }
-.clock__dial-numb.numb1::after {
+.dial-numb.numb1::after {
     content: "3";
     transform: translateY(-15px);
 }
-.clock__dial-numb.numb2::before {
-    content: "12";
-    transform: rotate(-90deg) translateY(-15px);;
-}
-.clock__dial-numb.numb2::after {
-    content: "6";
-    transform: rotate(-90deg) translateY(-15px);;
-}
 
 /* Clock hands styles start */
-.clock__hand {
+.clock-hand {
     left: 50%;
     position: absolute;
     bottom: 50%;
@@ -115,7 +122,7 @@ body {
     transition: transform 1s;
 }
 
-.clock__second-hand {
+.second-hand {
     background: red;
     height: 125px;
     left: 2px;
@@ -124,7 +131,7 @@ body {
     z-index: 5;
 }
 
-.clock__minute-hand {
+.minute-hand {
     height: 115px;
     background: #ffffff;
     left: 1.5px;
@@ -132,7 +139,7 @@ body {
     z-index: 4;
 }
 
-.clock__hour-hand {
+.hour-hand {
     background: #000000;
     border: 0.2px solid #dddddd;
     height: 85px;
