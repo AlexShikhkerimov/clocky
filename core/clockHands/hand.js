@@ -1,5 +1,4 @@
 export class ClockHand {
-    startTime = new Date()
     second = 1000
     baseClassName = 'clock-hand'
     handClassName = ''
@@ -9,6 +8,10 @@ export class ClockHand {
     shift = this.degreesPerDivision // number of degrees for even hand move
     startShift = 0
     delay = 0
+
+    constructor(startTime) {
+        this.startTime = startTime
+    }
 
     get nodeClassName() {
         return this.getClassName()
