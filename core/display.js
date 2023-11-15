@@ -1,6 +1,5 @@
-import { HourHand } from './clockHands/hour.js'
-import { MinuteHand } from './clockHands/minute.js'
-import { SecondHand } from './clockHands/second.js'
+import { Dial } from './dial.js';
+import { Tableau } from './tableau.js';
 
 export class Display {
     constructor(type, theme, location) {
@@ -28,52 +27,14 @@ export class Display {
     }
 
     drawAnalogDial() {
-        const dialNode = document.createElement('div')
-        dialNode.className = `dial ${this.theme}`
-
-        dialNode.innerHTML = `
-            <div class="dial-item dial-numb numb1"></div>
-            <div class="dial-item dial-line"></div>
-            <div class="dial-item dial-line"></div>
-
-            <div class="dial-item dial-numb numb2"></div>
-            <div class="dial-item dial-line"></div>
-            <div class="dial-item dial-line"></div>
-        `
-
-        this.drawHands(dialNode)
-        this.displayNode.append(dialNode)
+        const dial = new Dial(this.theme, this.location)
+        dial.render(this.displayNode)
     }
 
     drawDigitalTableau() {
-        const startTime = new Date()
-        const tableauNode = document.createElement('div')
-        tableauNode.className = `tableau ${this.theme}`
-
-        tableauNode.innerHTML = `
-            <div class="day-segment">${startTime.getUTCDay()}</div>
-            <div class="date-segment">${startTime.getDate()}</div>
-            <div class="time-segment">${startTime.getTime()}</div>
-            <div class="second-segment">${startTime.getSeconds()}</div>
-        `
-
-        this.displayNode.append(tableauNode)
-    }
-
-    drawHands(dialNode) {
-        const startTime = new Date()
-
-        const seconds = new SecondHand(startTime)
-        const minutes = new MinuteHand(startTime)
-        const hours = new HourHand(startTime)
-
-        seconds.run(dialNode)
-        minutes.run(dialNode)
-        hours.run(dialNode)
-    }
-
-    renderTableauData() {
-
+        const tableau = new Tableau(this.theme, this.location)
+        tableau.render(this.displayNode)
+        tableau.run()
     }
 
     listenTabVisibility() {

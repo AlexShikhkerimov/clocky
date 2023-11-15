@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Radioland';
+    src: local('Radioland'),
+    url('../fonts/RADIOLAND.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'digital-7 Regular';
+    src: local('Digital-7 Regular'),
+    url('../fonts/digital-7.regular.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}

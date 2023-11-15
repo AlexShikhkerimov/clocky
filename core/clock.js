@@ -12,5 +12,6 @@ export class Clock {
         this.clockNode.id = this.location
         this.display.create(this.clockNode)
         document.body.prepend(this.clockNode)
+        // this.display
     }
 }

@@ -1,3 +1,8 @@
+@import url('./fonts.css');
+
+/**
+    General
+*/
 *{
     box-sizing: border-box;
 }
@@ -12,28 +17,33 @@ body {
 }
 
 .clock {
+    align-items: center;
     border: 4px solid #091921;
     border-radius: 50%;
     box-shadow: 0 -15px 15px rgba(255, 255, 255, 0.05),
                 inset 0 -15px 15px rgba(255, 255, 255, 0.05),
                 0 15px 15px rgba(0, 0, 0, 0.3),
                 inset 0 15px 15px rgba(0, 0, 0, 0.3);
-
-    height: 300px;   
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    overflow: hidden;
     width: 300px;
 }
 
 .display {
     align-items: center;
     display: flex;
-    height: 100%;
+    height: max-content;
     justify-content: center;
     position: relative;
-    width: 100%;
+    width: max-content;
 }
 
 
-/* Dial  drawing start */
+/**
+    Analog dial
+*/
 .dial {
     background-color: #dddddd;
     border-radius: 50%;
@@ -113,7 +123,9 @@ body {
     transform: translateY(-15px);
 }
 
-/* Clock hands styles start */
+/**
+    Clock hands
+*/
 .clock-hand {
     left: 50%;
     position: absolute;
@@ -146,4 +158,53 @@ body {
     left: 0.5px;
     width: 5px;
     z-index: 3;
+}
+
+/**
+    Digital tableau
+*/
+.tableau {
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tableau__top {
+    display: flex;
+    font-family: 'Digital-7 Regular', sans-serif;
+    font-size: 24px;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 135%;
+    width: 100%;
+}
+
+.tableau__main {
+    display: flex;
+    font-family: 'Radioland', sans-serif;
+    font-size: 60px;
+    margin-bottom: -10%;
+}
+
+.time-segment {
+    display: flex;
+}
+
+.hour-segment,
+.minute-segment {
+    width: 80px;
+    text-align: end;
+}
+
+.time-separator {
+
+}
+
+.second-segment {
+    color: #720000;
+    font-size: 35px;
+    margin-top: 20px;
+    text-align: end;
+    width: 45px;
 }
